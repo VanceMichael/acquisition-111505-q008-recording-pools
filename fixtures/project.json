@@ -1,0 +1,9 @@
+{
+  "name": "运行诊断录制流的分块常量与事件资料接收",
+  "probe": "/recordings/r1/chunks",
+  "identityFields": [
+    "process",
+    "chunk",
+    "event"
+  ]
+}

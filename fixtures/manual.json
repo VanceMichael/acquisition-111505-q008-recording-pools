@@ -1,0 +1,10 @@
+{
+  "process": "app-1",
+  "chunk": "c1",
+  "event": "e1",
+  "thread": "接待线程",
+  "ticks": 500,
+  "stack": [
+    "receive"
+  ]
+}
