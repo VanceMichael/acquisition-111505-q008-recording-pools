@@ -4,6 +4,9 @@ import { join } from 'node:path';
 
 export const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 
+// accept() 内部按 [source, identity] 派生回执键，查询侧用同一规则回到对应回执。
+export const receiptKey = (source, identity) => digest(Buffer.from(JSON.stringify([source, identity])));
+
 export class Archive {
   constructor(directory) {
     this.directory = directory;
@@ -27,7 +30,7 @@ export class Archive {
       const bytes = Buffer.isBuffer(raw) ? raw : Buffer.from(raw);
       const sha256 = digest(bytes);
       await this.atomic(join(this.directory, 'blobs', sha256), bytes);
-      const key = digest(Buffer.from(JSON.stringify([source, identity])));
+      const key = receiptKey(source, identity);
       const path = join(this.directory, 'receipts', `${key}.json`);
       let previous = { source, identity, versions: [] };
       try { previous = JSON.parse(await readFile(path, 'utf8')); }
